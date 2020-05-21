@@ -1,4 +1,4 @@
-# CSViewer
+# CSViewer [![Netlify Status](https://api.netlify.com/api/v1/badges/c611800b-c033-4a32-9686-eff4535a1c6f/deploy-status)](https://app.netlify.com/sites/condescending-panini-86281d/deploys)
 
 CSV File reader made with React using [File Reader API](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
 
