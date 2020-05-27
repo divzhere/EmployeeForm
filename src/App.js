@@ -1,17 +1,24 @@
 import "./App.css";
-import { Modal, Button, Form, Col } from "react-bootstrap";
-
+import { Modal, Button } from "react-bootstrap";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addEmployee } from "./actions/employee";
+import { addEmployee, delEmployee } from "./actions/employee";
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       show: false,
-      setEmployee: { name: "", id: "", department: "HR", email: "", doj: "" },
+      setEmployee: {
+        name: "",
+        id: "",
+        department: "HR",
+        email: "",
+        doj: "",
+        index: Math.floor(Math.random() * (1000 - 1)) + 1,
+      },
     };
+    this.onClickDelete.bind(this);
   }
 
   handleShow = () => {
@@ -26,6 +33,10 @@ class App extends Component {
     this.setState({
       setEmployee: { ...this.state.setEmployee, [e.target.id]: e.target.value },
     });
+  };
+
+  onClickDelete = (index) => {
+    this.props.dispatch(delEmployee(index));
   };
 
   handleSubmit = (e) => {
@@ -135,16 +146,19 @@ class App extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.employees.length !== 0 &&
+                {this.props.employees &&
                   this.props.employees.map((i) => (
-                    <tr style={{ fontWeight: "normal" }}>
+                    <tr style={{ fontWeight: "normal" }} key={i.index}>
                       <td scope="row">{i.name}</td>
                       <td>{i.id}</td>
                       <td>{i.department}</td>
                       <td>{i.email}</td>
                       <td>{i.doj}</td>
                       <td>
-                        <button type="button" class="btn btn-danger">
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => this.onClickDelete(i.index)}
+                        >
                           Delete
                         </button>
                       </td>
